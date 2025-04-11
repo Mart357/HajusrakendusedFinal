@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-
+import { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Show edit',
+        title: 'Edit post',
         href: '/posts/edit',
     },
 ];
 </script>
 
 <template>
-     <AppLayout :breadcrumbs="breadcrumbs">
-    <div>Edit</div>
-     </AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <div>Edit</div>
+    </AppLayout>
+    
 </template>

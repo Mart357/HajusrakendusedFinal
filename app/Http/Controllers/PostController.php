@@ -14,6 +14,7 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('post/Index');
+
     }
 
     /**
@@ -24,19 +25,22 @@ class PostController extends Controller
         return Inertia::render('post/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-       Post::create($request->validate([
+        // dd($request);
+        //validate, et oleks väljadel sisu
+        //peale valideerimist salvestab postituse andmebaasi
+
+        Post::create($request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
         ]));
 
-        return redirect()->to(route('posts.index'));
-
+        //peale postitamist viib avalehele
+        return redirect()-> to(route('posts.index'));
+        
     }
+
 
     /**
      * Display the specified resource.
@@ -44,7 +48,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return Inertia::render('post/Show', [
-            'post' => $post,
+            'post' => $post
         ]);
     }
 
@@ -53,7 +57,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('post/Edit');
     }
 
     /**

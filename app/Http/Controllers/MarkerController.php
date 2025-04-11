@@ -7,74 +7,80 @@ use Illuminate\Http\Request;
 
 class MarkerController extends Controller
 {
-    // Markerite nimekirja laadimine ja filtreerimine
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $query = Marker::query();
-
-        // Filtrimine otsingu järgi
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        return $query->get()->map(function ($marker) {
-            return [
-                'id' => $marker->id,
-                'title' => $marker->name,
-                'description' => $marker->description,
-                'lat' => $marker->latitude,
-                'lng' => $marker->longitude,
-            ];
-        });
+        //
     }
 
-    // Markerite lisamine
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-        ]);
+        
+        Marker::create([
+           
+            'name' => $request->title,
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
 
-        $marker = Marker::create([
-            'name' => $validated['title'],
-            'description' => $validated['description'],
-            'latitude' => $validated['latitude'],
-            'longitude' => $validated['longitude'],
-        ]);
 
-        return response()->json([
-            'id' => $marker->id,
-            'title' => $marker->name,
-            'description' => $marker->description,
-            'lat' => $marker->latitude,
-            'lng' => $marker->longitude,
+            // 'name' => 'test',
+            // 'description' => 'test',
+            // 'latitude' => 0.0,
+            // 'longitude' => 0.0,
         ]);
+        
+        //   Post::create($request->validate([
+        //     'title' => 'required|max:255',
+        //     'description' => 'required',
+        // ]));
+            return redirect()-> to(route('markers.index'));
+        // //peale postitamist viib avalehele
+        // return redirect()-> to(route('posts.index'));
     }
 
-    // Markeri uuendamine
-    public function update(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Marker $marker)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-        ]);
-
-        $marker = Marker::findOrFail($id);
-        $marker->update([
-            'name' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-
-        return response()->json(['message' => 'Marker updated']);
+         
     }
 
-    // Markeri kustutamine
-    public function destroy($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Marker $marker)
     {
-        Marker::findOrFail($id)->delete();
-        return response()->json(['message' => 'Marker deleted']);
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Marker $marker)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Marker $marker)
+    {
+        //
     }
 }
