@@ -73,7 +73,7 @@ class MarkerController extends Controller
      */
     public function update(Request $request, Marker $marker)
     {
-        //
+    
     }
 
     /**

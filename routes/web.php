@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarkerController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +15,7 @@ Route::get('/', function () {
 Route::get('dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
 
 Route:: resource('posts', PostController::class)
     ->middleware(['auth', 'verified'])
@@ -26,6 +29,8 @@ Route:: resource('posts', PostController::class)
         'destroy' => 'posts.destroy',
     ]);
 
+    Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comments.store');
+
  Route::resource('markers', MarkerController::class)
     ->middleware(['auth', 'verified'])
     ->names([
@@ -37,6 +42,8 @@ Route:: resource('posts', PostController::class)
         'update' => 'markers.update',
         'destroy' => 'markers.destroy',
     ]);
+
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

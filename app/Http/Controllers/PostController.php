@@ -13,8 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Inertia::render('post/Index');
-
+        return Inertia::render('post/Index', [
+            'posts' => Post::all(),
+        ]);
     }
 
     /**
@@ -48,7 +49,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return Inertia::render('post/Show', [
-            'post' => $post
+            'post' => $post->loadMissing([
+                'comments' => fn ($query) => $query->with('user')->orderByDesc('created_at'),
+            ]),
         ]);
     }
 
@@ -73,6 +76,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->back();
+            
+
     }
 }
