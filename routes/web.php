@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarkerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,7 +18,7 @@ Route::get('dashboard', DashboardController::class)
     ->name('dashboard');
 
 
-Route:: resource('posts', PostController::class)
+Route:: resource('posts', PostController::class)->middleware(['auth'])
     ->middleware(['auth', 'verified'])
     ->names([
         'index' => 'posts.index',
@@ -43,7 +44,16 @@ Route:: resource('posts', PostController::class)
         'destroy' => 'markers.destroy',
     ]);
 
+    Route::get('/products', [ProductController::class, 'index'])->middleware('auth')->name('products.index');
 
+
+    Route::controller(CartController::class)
+    ->middleware('auth')
+    ->prefix('/cart')
+    ->name('cart.')
+    ->group(function () {
+        Route::post('/add/{product}', 'add')->name('add');
+    });
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
