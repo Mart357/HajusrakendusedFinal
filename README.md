@@ -4,7 +4,8 @@ Kõik järgnevad ülesanded võib lahendada eraldi iseseisvate projektidena või
 ---
 ### **Hajusrakenduse ülesanded**  
 LIVE: https://laravelralf.ta23pors.itmajakas.ee/
-#### **1. Ilmateenuse API liidestus**
+
+#### **1. Ilmateenuse API liidestus** ✅TEHTUD
 - Valida vabalt sobiv ilma API (nt https://openweathermap.org/api või muu sarnane teenus).
 - API-ga ühendumine ja ilmaandmete hankimine (eelistatud formaadis JSON või XML).
 - Andmete lokaalne vahemälu (cache), et vähendada API päringute arvu ja optimeerida kiirust.
