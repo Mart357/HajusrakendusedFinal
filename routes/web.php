@@ -53,7 +53,11 @@ Route:: resource('posts', PostController::class)->middleware(['auth'])
     ->name('cart.')
     ->group(function () {
         Route::post('/add/{product}', 'add')->name('add');
+        Route::get('/', 'view')->name('checkout');
+        Route::post('/clear', 'clear')->name('clear');
+        Route::post('/update', 'update')->name('update');
     });
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
