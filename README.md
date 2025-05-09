@@ -24,14 +24,14 @@ LIVE: https://laravelralf.ta23pors.itmajakas.ee/
 
 ---
 ### **Veebirakenduste arendamine**
-#### **3. Blogi ja Kommentaaride haldus**
+#### **3. Blogi ja Kommentaaride haldus** POOLELI
 - Luua blogifunktsionaalsus.
 - Lisada autentimissüsteem (registreerimine ja sisselogimine).
 - Luua andmebaasitabel **blogi postitustele**, mille väljad on `id`, `title`, `description`, `created_at`, `updated_at`.
 - Teostada blogi sissekannete CRUD (postituste lisamine, muutmine, kustutamine ja vaatamine).
 - Lisada võimalus postitustele kommentaare lisada ning administraatori poolt kommentaare hallata (sh kustutada).
 
-#### **4. E-pood ja ostukorvi funktsionaalsus**
+#### **4. E-pood ja ostukorvi funktsionaalsus** POOLELI
 - Luua **toote leht**, kus on vähemalt 9 erinevat toodet (pilt, nimi, hind, kirjeldus, koguse valik).
 - Rakendada **ostukorvi funktsionaalsus**, kus kasutaja saab:
   - Lisada tooteid ostukorvi.
@@ -47,7 +47,7 @@ LIVE: https://laravelralf.ta23pors.itmajakas.ee/
   - Kui makse ebaõnnestub, jäävad tooted ostukorvi alles ja näidatakse veateadet.
   - Salvestada tellimuse andmed andmebaasi.
 
-#### **5. API loomine enda valitud teemal**
+#### **5. API loomine enda valitud teemal** POLE ALUSTATUD
 - Valida endale isiklikult huvipakkuv teema (nt raamatud, filmid, toiduretseptid, matkamine vms) ning luua sellele põhinev API.
 - Luua andmebaasitabel `my_favorite_subject`, mille väljad on `id`, `title`, `image`, `description`, ja vähemalt kaks teemale omast lisaandmevälja (nt raamatute puhul `author` ja `publication_year`).
 - Luua kasutajasõbralik **andmete sisestamise vorm**, mis võimaldab kõigi vajalike väljade täitmist (title, description, image, +2 teemaspetsiifilist välja).
