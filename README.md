@@ -12,7 +12,7 @@ LIVE: https://laravelralf.ta23pors.itmajakas.ee/
 - Ilmaandmete kuvamine veebilehel, eelistatult koos visuaalsete elementidega (nt ikoonid või pildid vastavalt ilmastikuoludele).
 - Lisafunktsionaalsus: võimalus otsida ilmaandmeid eri linnade või riikide kohta.
 
-#### **2. Kaardirakendus API liidestus**
+#### **2. Kaardirakendus API liidestus** ✅TEHTUD
 - Valida sobiv kaardi API (nt Google Maps, OpenStreetMap, Radar Maps vms).
 - Luua andmebaasitabel `markers`, millel on järgmised väljad: `id`, `name`, `latitude`, `longitude`, `description`, `added`, `edited`.
 - Rakendada markerite haldusfunktsioonid (lisamine, vaatamine, muutmine, kustutamine).
