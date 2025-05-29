@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor((User::class))->constrained()->cascadeOnDelete();
-            $table->foreignIdFor((Post::class))->constrained()->cascadeOnDelete();
-            $table->text('comment');
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('author'); // <--- THIS LINE IS REQUIRED
+            $table->text('content');
             $table->timestamps();
         });
     }

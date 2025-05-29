@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('markers', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->nullable();
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
-        });
+            $table->string('image')->nullable();
+            $table->string('author')->nullable();
+            $table->string('publication_year')->nullable();
+    });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down()
-{
-    Schema::table('markers', function (Blueprint $table) {
-        $table->dropColumn(['name', 'description', 'longitude', 'latitude']);
-    });
-}
+    public function down(): void
+    {
+        Schema::dropIfExists('subjects');
+    }
 };

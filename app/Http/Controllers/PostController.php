@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
 
 class PostController extends Controller
 {
@@ -23,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('post/Create');
+    return Inertia::render('post/Create');
     }
 
     public function store(Request $request)
@@ -59,17 +61,26 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
-    {
-        return Inertia::render('post/Edit');
-    }
+{
+    return Inertia::render('post/Edit', [
+        'post' => $post,
+    ]);
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
+public function update(Request $request, Post $post)
+{
+    // Validate the request
+    $validated = $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+    ]);
+
+    // Update the post
+    $post->update($validated);
+
+    // Redirect back to the posts index
+    return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -79,7 +90,7 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->back();
-            
-
     }
+
+
 }

@@ -1,73 +1,37 @@
 <script setup lang="ts">
 
-import InputError from '@/components/InputError.vue';
 import Button from '@/components/ui/button/Button.vue';
-import Card from '@/components/ui/card/Card.vue';
-import CardContent from '@/components/ui/card/CardContent.vue';
-import CardDescription from '@/components/ui/card/CardDescription.vue';
-import CardFooter from '@/components/ui/card/CardFooter.vue';
-import CardHeader from '@/components/ui/card/CardHeader.vue';
-import CardTitle from '@/components/ui/card/CardTitle.vue';
-import Input from '@/components/ui/input/Input.vue';
-import Label from '@/components/ui/label/Label.vue';
-import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { BreadcrumbItem } from '@/types';
 import { useForm } from '@inertiajs/vue3';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Create post',
-        href: '/posts/create',
-    },
-];
 
 const form = useForm({
     title: '',
-    description: ''
+    description: '',
 });
 
 const submit = () => {
     form.post(route('posts.store'), {
-        onSuccess: () => {
-            form.reset();
-        },
-        onError: () => {
-            console.log('error');
-        },
+        onSuccess: () => form.reset(),
     });
 };
 
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="my-12 mx-auto w-full max-w-2xl">
-           <form @submit.prevent="submit">  
-                <Card>
-                    <CardHeader>
-                    <CardTitle>Create post</CardTitle>
-                    <CardDescription>Create a new blog post</CardDescription>
-                    </CardHeader>
-                    <CardContent class="flex flex-col gap-4">
-                    <div>
-                        <Label>Title</Label>
-                        <Input v-model="form.title"> </Input>
-                        <InputError :message="form.errors.title" />
-                    </div>
-                        <div>
-                            <label>Description</label>
-                            <Textarea v-model="form.description"> </Textarea>
-                             <InputError :message="form.errors.description" />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                    <Button type="submit"> Submit</Button>
-                    </CardFooter>
-                </Card>
+    <AppLayout>
+        <div class="max-w-2xl mx-auto my-12">
+            <h1 class="text-2xl font-bold mb-6">Add New Post</h1>
+            <form @submit.prevent="submit" class="space-y-4">
+                <div>
+                    <label class="block mb-1">Title</label>
+                    <input v-model="form.title" type="text" class="w-full border rounded p-2" required />
+                </div>
+                <div>
+                    <label class="block mb-1">Description</label>
+                    <textarea v-model="form.description" class="w-full border rounded p-2" required></textarea>
+                </div>
+                <Button type="submit">Submit</Button>
             </form>
-            <!-- <pre>{{ form }}</pre> -->
         </div>
     </AppLayout>
-    
 </template>

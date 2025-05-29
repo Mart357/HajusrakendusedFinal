@@ -2,64 +2,49 @@
 import Button from '@/components/ui/button/Button.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { BreadcrumbItem } from '@/types';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 
-
-const props = defineProps(['post'])
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Show post',
-        href: '/posts/show',
-    },
-];
+const props = defineProps(['post']);
 
 const form = useForm({
-    comment: ''
-})
+    author: '',
+    content: '',
+});
 
 const submit = () => {
-    form.post(route('comments.store', props.post), {
+    form.post(route('comments.store', props.post.id), {
         preserveScroll: true,
-        onSuccess: () => {
-            form.reset()
-        }
-    })
+        onSuccess: () => form.reset(),
+    });
 };
 
-
-
+function deleteComment(commentId: number) {
+    if (confirm('Are you sure you want to delete this comment?')) {
+        router.delete(route('comments.destroy', commentId));
+    }
+}
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <AppLayout>
         <div class="my-12 mx-auto w-full max-w-2xl">
-           <div>
-             <h1 class="text-2xl font-semibold tracking wide">{{ post.title }}</h1>
-             <p class="">{{ post.description }}</p>
-            <!-- {{ post }} -->
-           </div>
-           <div>
-                <form @submit.prevent="submit">
-                    <div class="relative">
-                        <Textarea v-model="form.comment" class="h-full w-full"></Textarea>
-                        <Button class="absolute bottom-4 right-4 z-10">Submit</Button>
-                    </div>
-                </form>
-                <div class="mt-4">
-                    <h2 class="text-lg font-semibold">Comments</h2>
-                    <ul>
-                        <li v-for="comment in post.comments" :key="comment.id" class="border-b py-2">
-                            <p class="text-sm text-gray-600">{{ comment.user.name }}:</p>
-                            <p>{{ comment.comment }}</p>
-                            <p class="text-xs text-gray-500">
-                                
-                                 {{ Math.floor((new Date() - new Date(comment.created_at)) / 60000) }} minutes ago
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+            <h1 class="text-2xl font-semibold mb-2">{{ post.title }}</h1>
+            <p class="mb-6">{{ post.description }}</p>
+            <form @submit.prevent="submit" class="mb-6">
+                <input v-model="form.author" placeholder="Your Name" required class="mb-2 w-full border rounded p-2" />
+                <Textarea v-model="form.content" placeholder="Your Comment" required class="mb-2 w-full" />
+                <Button type="submit">Add Comment</Button>
+            </form>
+            <div>
+                <h2 class="text-lg font-semibold mb-2">Comments</h2>
+                <ul>
+                    <li v-for="comment in post.comments" :key="comment.id" class="mb-2 border-b pb-2 flex justify-between items-center">
+                        <div>
+                            <p><strong>{{ comment.author }}</strong>: {{ comment.content }}</p>
+                        </div>
+                        <Button @click="deleteComment(comment.id)" size="sm" variant="destructive">Delete</Button>
+                    </li>
+                </ul>
             </div>
         </div>
     </AppLayout>

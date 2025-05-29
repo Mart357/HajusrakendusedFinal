@@ -28,10 +28,8 @@ class MarkerController extends Controller
      */
     public function store(Request $request)
     {
-        
         Marker::create([
-           
-            'name' => $request->title,
+            'name' => $request->name, // <-- PARANDUS: 'name', mitte 'title'
             'description' => $request->description,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -73,7 +71,13 @@ class MarkerController extends Controller
      */
     public function update(Request $request, Marker $marker)
     {
-    
+        $marker->update([
+            'name' => $request->name, // <-- PARANDUS: 'name', mitte 'title'
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+        return redirect()->route('markers.index');
     }
 
     /**
@@ -81,6 +85,7 @@ class MarkerController extends Controller
      */
     public function destroy(Marker $marker)
     {
-        //
+        $marker->delete();
+        return redirect()->route('markers.index');
     }
 }

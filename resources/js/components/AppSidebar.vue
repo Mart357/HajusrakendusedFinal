@@ -23,7 +23,12 @@ const mainNavItems: NavItem[] = [
         title: 'Products',
         href: '/products',
         icon: Box,
-    }
+    },
+    {
+        title: 'Movies',
+        href: '/subjects',
+        icon: Folder,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

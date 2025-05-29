@@ -6,11 +6,14 @@ use App\Observers\CommentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Post;
 
 
 #[ObservedBy(CommentObserver::class)]
 class Comment extends Model
 {
+
+    protected $fillable = ['post_id', 'author', 'content'];
     protected $guarded = [];
 
     protected $appends = [
@@ -29,4 +32,10 @@ class Comment extends Model
             get: fn () => $this->created_at->diffForHumans()
         );
     }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }
+

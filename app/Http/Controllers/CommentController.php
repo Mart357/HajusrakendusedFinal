@@ -27,11 +27,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Post $post, Request $request)
+    public function store(Request $request, Post $post)
     {
-        $post->comments()->create($request->validate([
-      'comment' => 'required',
-        ]));
+        $validated = $request->validate([
+            'author' => 'required|max:255',
+            'content' => 'required',
+        ]);
+        $post->comments()->create($validated);
+        return redirect()->back()->with('success', 'Comment added successfully!');
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully!');
     }
 
     /**
@@ -61,8 +70,4 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
-    {
-        //
-    }
 }

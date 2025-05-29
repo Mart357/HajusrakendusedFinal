@@ -17,16 +17,14 @@ const updateCart = (id: number, quantity: number | string) => {
         quantity: quantity,
     });
 };
-// Provided cart data with image URLs
+
+const removeFromCart = (id: number) => {
+    router.post(route('cart.remove'), { id });
+};
+
 const props = defineProps({
     cart: Object,
 });
-
-// const totalPrice = computed(() => {    <=======SEE OLI SIIS KUI FRONT-s oli ARVUTIS
-//   return Object.values(props.cart || {}).reduce((sum, item) => {
-//     return sum + item.price * item.quantity;
-//   }, 0);
-// });
 </script>
 
 <template>
@@ -34,6 +32,9 @@ const props = defineProps({
         <div class="container mx-auto p-6">
             <h1 class="mb-6 text-2xl font-bold">Checkout</h1>
             <div class="rounded-lg bg-white p-4 shadow-md">
+                <div v-if="$page.url.includes('success=1')" class="p-4 bg-green-100 text-green-700 rounded mb-4">
+                    Payment successful! Thank you for your purchase.
+                </div>
                 <table class="w-full border-collapse text-left">
                     <thead>
                         <tr>
@@ -42,6 +43,7 @@ const props = defineProps({
                             <th class="border-b px-4 py-2">Price</th>
                             <th class="border-b px-4 py-2">Quantity</th>
                             <th class="border-b px-4 py-2">Total</th>
+                            <th class="border-b px-4 py-2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,10 +60,18 @@ const props = defineProps({
                                     type="number"
                                     :min="0"
                                     :model-value="item.quantity"
-                                >
-                                </Input>
+                                />
                             </td>
                             <td class="border-b px-4 py-2">{{ formatCurrency(item.price * item.quantity) }}</td>
+                            <td class="border-b px-4 py-2">
+                                <button
+                                    @click="removeFromCart(id)"
+                                    class="text-red-600 hover:underline"
+                                    title="Remove"
+                                >
+                                    Remove
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -69,7 +79,15 @@ const props = defineProps({
                     <p class="text-lg font-bold">Total: {{ formatCurrency($page.props.cartTotal) }}</p>
                 </div>
                 <div class="mt-6 flex justify-end">
-                    <button class="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700">Proceed to Payment</button>
+                    <form :action="route('cart.stripe')" method="POST">
+                        <input type="hidden" name="_token" :value="$page.props.csrf_token" />
+                        <button
+                            type="submit"
+                            class="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                        >
+                            Proceed to Payment
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
