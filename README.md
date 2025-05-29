@@ -24,7 +24,7 @@ LIVE: https://laravelralf.ta23pors.itmajakas.ee/
 
 ---
 ### **Veebirakenduste arendamine**
-#### **3. Blogi ja Kommentaaride haldus** POOLELI
+#### **3. Blogi ja Kommentaaride haldus** ✅TEHTUD
 - Luua blogifunktsionaalsus.
 - Lisada autentimissüsteem (registreerimine ja sisselogimine).
 - Luua andmebaasitabel **blogi postitustele**, mille väljad on `id`, `title`, `description`, `created_at`, `updated_at`.
