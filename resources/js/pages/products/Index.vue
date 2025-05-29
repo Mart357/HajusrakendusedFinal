@@ -5,7 +5,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { ShoppingCart, Trash } from 'lucide-vue-next';
 import { Link, router } from '@inertiajs/vue3';
 
-const props = defineProps(['products']);
+const props = defineProps(['products', 'success', 'message']);
 
 const addToCart = (product: any) => {
     router.post(route('cart.add', product), undefined, {
@@ -27,6 +27,10 @@ const formatCurrency = (amount: number) => {
 
 <template>
     <AppLayout>
+        <div v-if="success" class="p-4 bg-green-100 text-green-700 rounded mb-4">
+            {{ message }}
+        </div>
+
         <!-- Cart Controls Bar -->
         <div class="sticky top-4 z-10 flex justify-end mb-8">
             <div class="flex gap-2 bg-white/80 backdrop-blur rounded-lg shadow px-4 py-2 items-center">

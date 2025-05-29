@@ -28,8 +28,21 @@ Route::resource('subjects', SubjectController::class)
     ]);
 
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
+Route::get('/', function (Request $request) {
+    $success = false;
+    $message = null;
+
+    if ($request->has('session_id')) {
+        // Tühjenda ostukorv
+        session()->forget('cart');
+        $success = true;
+        $message = 'Makse õnnestus! Aitäh ostu eest.';
+    }
+
+    return Inertia::render('Welcome', [
+        'success' => $success,
+        'message' => $message,
+    ]);
 })->name('home');
 
 Route::get('dashboard', DashboardController::class)
@@ -100,12 +113,15 @@ Route::post('/cart/checkout', function (Request $request) {
         'payment_method_types' => ['card'],
         'line_items' => $lineItems,
         'mode' => 'payment',
-        'success_url' => route('home') . '?success=1',
+        'success_url' => route('products.index') . '?success=1',
         'cancel_url' => route('cart.checkout'),
     ]);
 
     return redirect($session->url);
 })->middleware('auth')->name('cart.stripe');
+
+Route::get('/cart/success', [CartController::class, 'stripeSuccess'])->name('cart.success');
+Route::get('/cart/cancel', [CartController::class, 'stripeCancel'])->name('cart.cancel');
 
 
 require __DIR__.'/settings.php';

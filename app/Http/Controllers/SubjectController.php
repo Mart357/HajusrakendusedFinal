@@ -12,8 +12,23 @@ class SubjectController extends Controller
      */
     public function index()
 {
+    $myMovies = \App\Models\Subject::all();
+
+    // Võta teise isiku filmid API-st
+    $otherMovies = [];
+    try {
+        $response = \Illuminate\Support\Facades\Http::get('https://hajus.ta23raamat.itmajakas.ee/api/movies');
+        if ($response->ok()) {
+            $otherMovies = $response->json();
+        }
+    } catch (\Exception $e) {
+        // Võid logida vea või jätta lihtsalt tühjaks
+        $otherMovies = [];
+    }
+
     return inertia('Subject', [
-        'movies' => \App\Models\Subject::all(),
+        'movies' => $myMovies,
+        'otherMovies' => $otherMovies,
     ]);
 }
 

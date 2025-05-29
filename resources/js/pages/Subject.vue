@@ -5,7 +5,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 
-const props = defineProps(['movies']);
+const props = defineProps(['movies', 'otherMovies']);
 
 const search = ref('');
 
@@ -53,6 +53,25 @@ const filteredMovies = computed(() => {
                     <div><span class="font-semibold">Release year:</span> {{ movie.publication_year }}</div>
                 </div>
             </Card>
+        </div>
+
+        <!-- Teiste isikute filmid -->
+        <div class="mt-12">
+            <h2 class="text-xl font-bold mb-4">Teiste kasutajate filmid</h2>
+            <div v-if="props.otherMovies && props.otherMovies.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <Card v-for="movie in props.otherMovies" :key="movie.id" class="flex flex-col p-4 shadow hover:shadow-lg transition">
+                    <div class="flex justify-center items-center h-56 mb-4">
+                        <img v-if="movie.image" :src="movie.image" :alt="movie.title" class="max-h-full max-w-full object-contain rounded" />
+                    </div>
+                    <h2 class="text-lg font-semibold mt-2">{{ movie.title }}</h2>
+                    <p class="text-gray-600 mt-1 line-clamp-2">{{ movie.description }}</p>
+                    <div class="mt-3 text-sm text-gray-700">
+                        <div><span class="font-semibold">Director:</span> {{ movie.author }}</div>
+                        <div><span class="font-semibold">Release year:</span> {{ movie.publication_year }}</div>
+                    </div>
+                </Card>
+            </div>
+            <div v-else class="text-gray-500">Teiste kasutajate filme ei leitud.</div>
         </div>
     </AppLayout>
 </template>

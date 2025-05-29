@@ -21,5 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void      
     {
         Inertia::share('csrf_token', fn () => csrf_token());
+        Inertia::share('success', fn () => session('success'));
+        Inertia::share('error', fn () => session('error'));
     }
 }

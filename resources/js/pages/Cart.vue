@@ -32,8 +32,11 @@ const props = defineProps({
         <div class="container mx-auto p-6">
             <h1 class="mb-6 text-2xl font-bold">Checkout</h1>
             <div class="rounded-lg bg-white p-4 shadow-md">
-                <div v-if="$page.url.includes('success=1')" class="p-4 bg-green-100 text-green-700 rounded mb-4">
-                    Payment successful! Thank you for your purchase.
+                <div v-if="$page.props.success" class="p-4 bg-green-100 text-green-700 rounded mb-4">
+                    {{ $page.props.success }}
+                </div>
+                <div v-if="$page.props.error" class="p-4 bg-red-100 text-red-700 rounded mb-4">
+                    {{ $page.props.error }}
                 </div>
                 <table class="w-full border-collapse text-left">
                     <thead>
